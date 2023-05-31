@@ -12,7 +12,7 @@ Wanneer we een match zijn, wil ik kunnen zien hoeveel procent we matchen aan de 
 `$ git https://github.com/dinhs-frontend/blok-tech.git`
 ***
 ### Navigate to repo
-`cd Dating-app`
+`cd blok-tech`
 ***
 ### Install
 `npm install`
