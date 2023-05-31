@@ -9,7 +9,7 @@ Hier onder vind je meer informatie, hoe je mijn project kan instaleren.
 Wanneer we een match zijn, wil ik kunnen zien hoeveel procent we matchen aan de hand van vooraf gekozen topics, zodat ik kan zien of we veel gemeen hebben.
 ***
 ### **How to install**
-`$ git https://github.com/dinhs-frontend/Dating-app.git`
+`$ git https://github.com/dinhs-frontend/blok-tech.git`
 ***
 ### Navigate to repo
 `cd Dating-app`
