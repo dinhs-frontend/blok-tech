@@ -1,19 +1,159 @@
+//*  Index.js *//
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const { MongoClient } = require('mongodb');
+const { ObjectId } = require('mongodb');
+const { engine } = require('express-handlebars');
 var PORT = 8080;
+// const Eten = require('./models/eten')
+// const etens = []
 
 require('dotenv').config();
  
 app.use(express.static('static'));
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(session({
-//   resave: false,
-//   saveUninitialized: true,
-//   secret: process.env.SESSION_SECRET,
-//   // store: new MongoStore({ mongooseConnection: db1 })
-// }));
-app.set ('view engine', 'ejs');
+
+// const url = process.env.DB_CONNECTION_STRING;
+
+// let result;
+
+// async function connectToMongoDB() {
+//   try {
+//     const client = new MongoClient(url);
+//     await client.connect();
+
+//     console.log('Verbonden met de database.');
+
+//     const db = client.db('dataName');
+//     const collection = db.collection('eten');
+
+//     // await collection.insertMany(etenData);
+//     result = await collection.find({}).toArray();
+    
+//     client.close();
+//     console.log('Verbinding met de database');
+//   } catch (error) {
+//     console.error('Er is een fout opgetreden bij het verbinden met de database:', error);
+//   }
+
+// }
+
+//-------------TEST------------------------------------------------------------------///
+// Maak verbinding met MongoDB
+const url = process.env.DB_CONNECTION_STRING;
+const client = new MongoClient(url);
+
+async function connectToMongoDB() {
+  try {
+    await client.connect();
+    console.log('Verbonden met de database.');
+  } catch (error) {
+    console.error('Er is een fout opgetreden bij het verbinden met de database:', error);
+  }
+}
+
+// Endpoint om data naar MongoDB te sturen
+app.post('/topics', async (req, res) => {
+  // const likedUser = req.body.like;
+
+ 
+  try {
+    const db = client.db('dataName');
+    const collection = db.collection('eten');
+
+    const likedUser = { _id: new ObjectId(), name: req.body.like };
+    await collection.insertOne(likedUser);
+
+  
+
+    console.log('Gegevens succesvol toegevoegd aan MongoDB.');
+
+    res.redirect('/topics');
+  } catch (error) {
+    console.error('Er is een fout opgetreden bij het toevoegen van de gegevens aan MongoDB:', error);
+    res.redirect('/topics');
+  }
+});
+// const likedUser = req.body.like;
+// //   likedUserProfile = likedUser;
+// //   res.render('like', {likedUser});
+
+// Render Topics.handlebars met gegevens uit MongoDB
+app.get('/topics', async (req, res) => {
+  try {
+    const db = client.db('dataName');
+    const collection = db.collection('eten');
+
+    const result = await collection.find({}).toArray();
+    res.render('topics', { result });
+  } catch (error) {
+    console.error('Er is een fout opgetreden bij het ophalen van de gegevens uit MongoDB:', error);
+    res.render('topics', { result: [] }); // Render de pagina met een lege array als er een fout optreedt
+  }
+});
+
+
+
+app.listen(PORT, async () => {
+  await connectToMongoDB();
+  console.log(`Server running on port: ${PORT}`);
+});
+
+
+
+
+
+//-------------REMOVE__BTN------------------------------------------------------------------///
+app.post('/remove', removeData);
+
+async function removeData(req, res) {
+  const { id } = req.body;
+
+  try {
+    const client = new MongoClient(url);
+    await client.connect();
+
+    const db = client.db('dataName');
+    const collection = db.collection('eten');
+
+    await collection.deleteOne({});
+
+
+    client.close();
+    console.log('Gegevens succesvol verwijderd.');
+
+    res.redirect('/topics');
+  } catch (error) {
+    console.error('Er is een fout opgetreden bij het verwijderen van de gegevens:', error);
+    res.redirect('/topics');
+  }
+}
+
+
+
+// Roep de functie aan om verbinding te maken met de database.
+// connectToMongoDB();
+
+
+// let likedUserProfile;
+
+// app.post('/like', (req, res) => {
+//   const likedUser = req.body.like;
+//   likedUserProfile = likedUser;
+//   res.render('like', {likedUser});
+// });
+
+// app.get('/like', (req, res) => {
+//   res.render('like', {likedUserProfile});
+// });
+
+app.engine('handlebars', engine({ defaultLayout: 'header' }))
+app.set('view engine', 'handlebars')
+
+// const eten = require('./models/eten')
+
+// app.set ('view engine', 'ejs');
 app.set('views', 'view');
 
 app.get('/', findname);
@@ -22,53 +162,80 @@ app.get('/account', account); //--1--//
 // app.get ('/topics',sessionAdd);
 app.get('/topics', topics);
 
-app.post('/remove', remove);
+
+// app.post('/remove', removeEten);
 app.post('/topics', add);//-3--//
 //error >> kan pagina niet vinden
 app.use(function(req, res) {
-  res.status(404).render('404.ejs');
+  res.status(404).render('404');
 });
 
 function findname(req, res) {
   console.log('coming here?')
-  res.render('index.ejs');
+  res.render('index');
 }
 
 function form(req, res) {
-  res.render('add.ejs');
+  res.render('add');
 }
 
 function account(req, res) {
-  res.render('account.ejs');
+  res.render('account');
 }
 
 function topics(req, res) {
-  res.render('topics.ejs')
-
+  res.render('topics', { result });
 }
+
+// const etenData = [
+//   {
+//    categorie: 'eten',
+//    keuken: 'italiaans',
+//    naam: 'pizza',
+//   },
+//   {
+//     categorie: 'eten',
+//     keuken: 'spaans',
+//     naam: 'tapas',
+//   },
+//   {
+//     categorie: 'eten',
+//     keuken: 'vietnamees',
+//     naam: 'loempia',
+//   },
+// ]
 
 //--------------------------//
-
-function remove(req, res) {
-  res.render('remove');
-
-}
 
 function add(req, res) {
   res.send('topics');
 }
 
-app.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT}`);
-});
-
-
-
-
-
+// app.listen(PORT, () => {
+//   console.log(`Server running on port: ${PORT}`);
+// });
 
 
 //------------------------------------------------//
+
+// app.get("/topics",(req, res) => {
+//   console.log("inside match");
+// match(req, res);
+// });
+
+// app.post("/topics", (req, res) => {
+//   matchPost(req, res);
+// });
+
+// const match = (req, res) => {
+//   res.render("topics");
+// };
+// const matchPost = async (req, res) => {
+//   const user = await User.findOne({username: req.session.name});
+//  user.likedGames.push(req.body);
+//   await user.save();
+//   res.sendStatus(200);
+// };
 
 // app.post('/edit-account', addDataProfile)
 // app.get('/', getAccount)
@@ -81,7 +248,6 @@ app.listen(PORT, () => {
 
 //------------------------------------------//
 // app.delete ('/topics' , deleteOne);
-
 
 
 
@@ -105,12 +271,12 @@ app.listen(PORT, () => {
 //     if (err) {
 //       next(err)
 //     } else {
-//       res.render('topics.ejs', {data: eten})
+//       res.render('topics.handlebars', {data: eten})
 //     }
 //   }
 // }
 
-// db.collection('naam').insertOne(
+// db.collection('eten').insertOne(
 //   req.session.user, done)
   
 //  function done(err) {
@@ -118,7 +284,7 @@ app.listen(PORT, () => {
 //           next(err)
 //            } 
 //         else {
-//            res.render('topic.ejs')
+//            res.render('topic.handlebars')
 //           }
 //       }
   
@@ -281,4 +447,4 @@ app.listen(PORT, () => {
 //Bronnen:
 //- Slide
 //- klasgenoten
-//- examles
+//- examples

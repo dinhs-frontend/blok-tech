@@ -1,4 +1,4 @@
-<%- include("./header") %>
+{{> header }}
 
     <header>
         <nav class="navigatie1">
@@ -19,8 +19,7 @@
                 <span></span>
                 <ul id="menu">
                     <li>
-                        <img src="" alt="">
-                    </li>
+                        <img src="" alt=""></li>
                     <li>
                         <h1>Lufmi</h1>
                     </li>
@@ -37,19 +36,20 @@
             </div>
         </nav>
     </header>
-    <h1>Common topics</h1>
-    <% for (var index = 0; index < data.length; index++) { %>
+        <h1>Account aanmaken</h1>
         <section>
-            <form class="yourTopics" action="/remove" method="POST">
-                <span id="topics"><%= data[index].name%></span>
-                <label id="labelTopic" for="food_id" style="display:none;">
-                    <input type="text" name="food_id" value=<%= data[index]._id%>>
-                </label>
-                <button class="removebtn" type="submit">x</button>
+            <form id="accountForm" action="/" method="POST">
+                <label for="">Voornaam</label>
+                <input type="text">
+
+                <label for="">Achternaam</label>
+                <input type="text">
+
+                <label for="">Leeftijd</label>
+                <input type="text">
+
+                <input id="btnform" type="submit" value="Submit">
             </form>
+
         </section>
-    <% } %>
-        <section>
-            <a id="add" href="/add">Add</a>
-        </section>
-    <%- include ("./footer") %>
+{{!-- {{> footer }} --}}

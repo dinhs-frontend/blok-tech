@@ -114,7 +114,7 @@ a {
     text-decoration: none;
 }
 
-.LikeButton {
+.DisLikeButton {
     background-color: whitesmoke;
     color: #9cb4ec;
     border-radius: 50%;
@@ -129,7 +129,7 @@ a {
     margin: 0 2rem;
 }
 
-.LikeButton1 {
+.LikeButton {
     background-color: #9cb4ec;
     /* background-image: url("heart2.svg"); */
     color: white;

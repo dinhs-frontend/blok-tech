@@ -1,0 +1,73 @@
+{{> header }}
+ <!--- topics.handlebars --->
+<header>
+    <nav class="navigatie1">
+        <ul>
+            <li>
+                <h1>Lufmi</h1>
+            </li>
+            <li>
+                <img id="logo" src="img/logo.svg" alt="Lufmi">
+            </li>
+        </ul>
+    </nav>
+    <nav class="navigatie2">
+        <div id="menuToggle">
+            <input type="checkbox"/>
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <li>
+                    <img src="" alt="">
+                </li>
+                <li>
+                    <h1>Lufmi</h1>
+                </li>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="topics">Topics</a>
+                </li>
+                <li>
+                    <a href="account">Account</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<h1>Common topics</h1>
+
+<section>
+    {{!-- <form class="yourTopics" action="/topics" method="POST"> --}}
+
+    {{!-- {{#each result}}
+    <span id="topics">
+        Keuken:{{ this.keuken }}
+        Gerecht:{{ this.naam }}</span>
+    <form action="/topics" method="POST">
+        <input type="hidden" name="id" value="{{this._id}}">
+        <button type="submit" class="remove-btn">Verwijder</button>
+    </form>
+{{/each}}
+--}}
+
+{{!-- topics.handlebars --}}
+<section>
+    {{#each result}}
+        <span id="topics">{{ this.name }} </span>
+        {{ this.food }}
+        <form action="/remove" method="POST">
+            <input type="hidden" name="id" value="{{this._id}}">
+            <button type="submit" class="remove-btn">Verwijder</button>
+        </form>
+    {{/each}}
+    <a id="add" href="/add">Add</a>
+</section>
+
+{{!-- <button class="removebtn" type="submit">x</button> --}}
+
+{{!-- </form> --}}
+
+</section>

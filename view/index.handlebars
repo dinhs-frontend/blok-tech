@@ -1,4 +1,4 @@
-<%- include("./header") %>
+{{> header }}
 <header>
     <nav class="navigatie1">
         <ul>
@@ -6,18 +6,18 @@
                 <h1>Lufmi</h1>
             </li>
             <li>
-                <img id="logo" src="img/logo.svg" alt="Lufmi">
+                <img id="logo" src="css/img/logo.svg" alt="Lufmi">
             </li>
             <li>
 
                 <form id="session" action="/topics" method="POST">
                     <label for="persoon">persoon:</label>
-                    <select id="cars" name="name">
-                <% for (var index = 0; index < data.length; index++) { %>
-                      <option value="<%= data[index].name%>"><%= data[index].name%></option>
-                <% } %> 
-                    <option value="persoon1">Zoë</option>
-                    <option value="persoon2">Joey</option>
+                    <!-- <select id="cars" name="name"> -->
+             
+                      <!-- <option value="<%= data[index].name%>"><%= data[index].name%></option> --> 
+   
+                    <!-- <option value="persoon1">Zoë</option>
+                    <option value="persoon2">Joey</option> -->
                     </select>
                     <input type="submit">
                   </form>
@@ -51,16 +51,17 @@
     </nav>
 </header>
     <main>
-        <form id="user" method="POST" action="/match">
-            <h2>Flux</h2>
-            <img src="img/Anna.jpg" alt="Flux">
-            <p></p>
-            <a class="LikeButton" href="#">
-                <img src="img/brokeheart.svg" alt="">
-            </a>
-            <a class="LikeButton1" href="#">
-                <img src="img/heart2.svg" alt="">
-            </a>
+        <form id="user" method="POST" action="/topics">
+            <h2>Loempia</h2>
+              <div class="userimg"></div>
+            <p>yoyogangster</p>
+                <button type="button" class="DisLikeButton">
+                    <div class="heartbrokeBtn"><img src="css/img/brokeheart.svg" alt=""></div>
+                </button>
+                <button type="submit" class="LikeButton" name="like" value="hallo">
+                    <div class="heartBtn"><img src="css/img/heart2.svg" alt=""></div>
+                </button>
         </form>
      </main>
-<%- include ("./footer") %>
+     <script src="script/script.js"></script>
+{{!-- {{> footer }} --}}

@@ -1,7 +1,7 @@
 section {
     margin-left: auto;
     margin-right: auto;
-    display: flex;
+    display: grid;
     justify-content: center;
 
 }
@@ -112,10 +112,12 @@ input[type="checkbox"]:hover:not(:checked) + label {
 /*-------------------------------------------------*/
 
 .yourTopics {
-    margin: 1rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    width: 100%;
+    padding: -0.5rem;
+    max-width: 20rem;
+    border-radius: 15px;
+    margin-top: 3rem;
+    margin-bottom: 9rem;
 }
 
 .topicList {
@@ -136,6 +138,9 @@ input[type="checkbox"]:hover:not(:checked) + label {
     margin-right: 1rem;
     min-width: 4rem;
     text-align: center;
+    display: block;
+    position: relative;
+    margin-top: 9%;
 }
 
 #topics {
@@ -158,7 +163,7 @@ input[type="checkbox"]:hover:not(:checked) + label {
     font-family: 'Quicksand', sans-serif;
     background-color: cornflowerblue;
     padding: 0.9rem;
-    margin-top: -1rem;
+    margin-top: 2rem;
     border-radius: 5px;
     height: 1rem;
     width: 8rem;
@@ -209,3 +214,13 @@ input[type=text] {
     border-radius: 4px;
 }
 
+.userimg {
+    background-color: #9cb4ec;
+    background-image: url("img/Sang.cv.jpg");
+    width: 100%;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    height: 32rem;
+    background-size: cover;
+    background-position: center;
+}
